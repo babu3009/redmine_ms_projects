@@ -1,42 +1,42 @@
 <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'application', :plugin => 'redmine_ms_projects' %>
 <% end %>
-
-<br/>
-<br/>
-
 <% if @tasks.size > 0 %>
 <br/>
-<br/>
 <div style="clear: both;"/>
-<% form_for :ms_project, :url => {:action => 'add', :project_id => @project } do %>
+<%= form_for :ms_project, :url => {:action => 'add', :project_id => @project } do %>
 <table class="list">
   <tr>
-  <th><%= link_to image_tag('toggle_check.png'), 
-          {}, 
+  <th><%= link_to image_tag('toggle_check.png'),
+          {},
           :onclick => "toggleCheckboxesBySelector('input'); return false;",
-          :title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}" 
+          :title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}"
         %>
   </th>
-  <th><%= l :title %></th>
-  <th><%= l :tracker %></th>
-  <th><%= l :assign %></th>
-  <th><%= l :new_task %></th>
-  <th><%= l :start_date %></th>
-  <th><%= l :finish_date %></th>
-  <th><%= l :create_date %></th>
+  <th><%= l(:title) %></th>
+  <th><%= l(:tracker) %></th>
+  <th><%= l(:field_assigned_to) %></th>
+  <th><%= l(:start_date) %></th>
+  <th><%= l(:finish_date) %></th>
+  <th><%= l(:create_date) %></th>
+  <th><%= l(:label_classification) %></th>
   </tr>
   <% @tasks.each_with_index do |task, i| %>
-  <tr>
-  <td><%= check_box_tag 'checked_items[]', task.task_id, :class => 'task_check_box' %></td>
-  <td><span class="msp-level<%= task.outline_level %>"><%= task.name %></span></td>
-  <td><%= select_tag 'trackers[]', options_for_select(@trackers.collect {|t| [t.name, t.id]})%></td>
-  <td><%= select_tag 'assigns[]', "<option value=''></option>" + options_for_select(@members.collect {|m| [m.name, m.id]}) %></td>
-  <td><%= task.create? ? l(:label_added) : l(:label_modified) %></td>
-  <td><%= task.start_date %></td>
-  <td><%= task.finish_date %></td>
-  <td><%= task.create_date %></td>
-  </tr>
+    <tr>
+      <% if task.name %>
+        <td><%= check_box_tag 'checked_items[]', task.task_id, :class => 'task_check_box' %></td>
+        <td style="text-indent:<%= task.outline_level %>em"><%= task.name %></td>
+      <% else %>
+        <td><%= check_box_tag 'checked_items[]', task.task_id, false, :class => 'task_check_box' %></td>
+        <td style="text-indent:<%= task.outline_level %>em"><%= text_field_tag 'task_name_' + task.task_id, nil, :placeholder => l(:issue_name_blank), :size => 45 %></td>
+      <% end %>
+      <td><%= select_tag 'trackers[]', options_for_select(@project.trackers.collect {|t| [t.name, t.id]}) %></td>
+      <td><%= select_tag 'assigns[]', options_for_select((@members.collect {|m| [m.name, m.id]}).unshift(["", 0]), :selected => task.assignee) %></td>
+      <td align="center"><%= task.start_date %></td>
+      <td align="center"><%= task.finish_date %></td>
+      <td align="center"><%= task.create_date %></td>
+      <td align="center"><%= task.create? ? l(:label_added) : l(:label_modified) %></td>
+    </tr>
   <% end %>
 </table>
 <div class="contextual">

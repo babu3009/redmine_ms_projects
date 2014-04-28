@@ -1,5 +1,7 @@
+# encoding: utf-8
 class MspTask
   attr_accessor :task_id
+  attr_accessor :task_uid
   attr_accessor :name
   attr_accessor :resource
   attr_accessor :start_date
@@ -10,6 +12,7 @@ class MspTask
   attr_accessor :outline_level
   attr_accessor :outline_number
   attr_accessor :wbs
+  attr_accessor :assignee
 
   def create?
     @create

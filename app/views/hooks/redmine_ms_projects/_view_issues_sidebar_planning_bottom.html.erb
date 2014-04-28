@@ -1,0 +1,8 @@
+<% if !@project.blank? && @project.module_enabled?('arrangeable_graph_maker') %>
+<h3><%= l(:msproject) %></h3>
+	<%= link_to "MS Project XMLファイルのインポート",
+	      :controller => "msprojects",
+	      :action => "index",
+	      :project_id => @project.identifier %>
+<br>
+<% end %>

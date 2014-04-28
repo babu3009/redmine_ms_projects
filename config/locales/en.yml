@@ -1,4 +1,5 @@
-en: 
+# English strings go here for Rails i18n
+en:
   msproject: MS Project
   title: Subject
   tracker: Tracker
@@ -8,8 +9,10 @@ en:
   button_read: Upload
   assign: Assigned to
   resource: Resource
-  msp_read_message: "Added: %d issues"
-  msp_update_message: "Updated: %d issues"
+  msp_read_message: issues added
+  msp_update_message: issues updated
   file_read_error: Error
   new_task: New Tickets
   modified_task: Modified Tickets
+
+  not_found_member: Member is not registered in the project. Please perform the uptake again after registering members.
